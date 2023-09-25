@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book List App</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <div id="message" ></div>
+
+    <div id="container">
+      <h1>Book List App</h1>
+      <div class="sub-container">
+        <p>Input data buku</p>
+        <form id="form-container">
+          <div>
+            <label for="title">Judul</label>
+            <input class="text" type="text" name="title" id="title" required />
+          </div>
+          <div>
+            <label for="author">Penulis</label>
+            <input class="text" type="text" name="author" id="author" required />
+          </div>
+          <div>
+            <label for="year">Tahun</label>
+            <input class="text" type="number" name="year" id="year" required />
+          </div>
+          <div>
+            <span>Selesai dibaca</span
+            ><input type="checkbox" name="checkbox" id="checkbox" />
+          </div>
+          <input type="submit" value="Submit" id="submit" />
+        </form>
+      </div>
+
+      <div class="search-container">
+        <h2>Cari Judul Buku</h2>
+        <div class="search-box">
+          <input class="text" type="text" id="search-book">
+          <button type="button" id="search-btn">Cari</button>
+        </div>
+      </div>
+
+      <h1>Belum Selesai Dibaca</h1>
+      <div id="current-books">
+      </div>
+      <h1>Selesai Dibaca</h1>
+      <div id="finish-books">
+      </div>
+    </div>
+    <script src="index.js"></script>
+  </body>
+</html>
