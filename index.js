@@ -25,9 +25,9 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   const searchBtn = document.getElementById("search-btn");
-  searchBtn.addEventListener('click',function(){
+  searchBtn.addEventListener("click", function () {
     searchBookFunction();
-  })
+  });
 });
 
 document.addEventListener(renderEvent, function () {
@@ -38,7 +38,7 @@ document.addEventListener(renderEvent, function () {
 
   for (const book of books) {
     const element = elementBook(book);
-    if (!book.isComplited) {
+    if (!book.isComplete) {
       currentBooks.append(element);
     } else {
       finishBooks.append(element);
@@ -52,11 +52,10 @@ function addBook() {
   const author = document.getElementById("author").value;
   const year = document.getElementById("year").value;
   const checkBox = document.querySelector("#checkbox").checked;
-  const isComplited = checkBox ? true : false;
+  const isComplete = checkBox ? true : false;
 
-  const bookObject = { id, title, author, year, isComplited };
+  const bookObject = { id, title, author, year: Number(year), isComplete };
   books.push(bookObject);
-
   document.dispatchEvent(new Event(renderEvent));
   saveBook();
   document.getElementById("title").value = "";
@@ -81,18 +80,18 @@ function elementBook(item) {
   itemContainer.classList.add("item-container");
   itemContainer.append(bookData);
 
-  if (item.isComplited) {
+  const deleteBtn = document.createElement("button");
+  deleteBtn.classList.add("delete-btn");
+
+  deleteBtn.addEventListener("click", function () {
+    deleteBtnBook(item.id);
+  });
+
+  if (item.isComplete) {
     const undoBtn = document.createElement("button");
     undoBtn.classList.add("undo-btn");
     undoBtn.addEventListener("click", function () {
       filterBookComplited(item.id);
-    });
-
-    const deleteBtn = document.createElement("button");
-    deleteBtn.classList.add("delete-btn");
-
-    deleteBtn.addEventListener("click", function () {
-      deleteBtnBook(item.id);
     });
 
     const divBtn = document.createElement("div");
@@ -110,7 +109,7 @@ function elementBook(item) {
 
     const divBtn = document.createElement("div");
     divBtn.classList.add("btn-container");
-    divBtn.append(checkBtn);
+    divBtn.append(checkBtn, deleteBtn);
 
     itemContainer.append(divBtn);
   }
@@ -145,10 +144,10 @@ function loadData() {
 
 function filterBookComplited(id) {
   const getBook = books.find((i) => i.id === id);
-  if (getBook.isComplited === true) {
-    getBook.isComplited = false;
+  if (getBook.isComplete === true) {
+    getBook.isComplete = false;
   } else {
-    getBook.isComplited = true;
+    getBook.isComplete = true;
   }
   document.dispatchEvent(new Event(renderEvent));
   saveBook();
@@ -185,16 +184,14 @@ function message(msg) {
   }, 2000);
 }
 
-function searchBookFunction(){
+function searchBookFunction() {
   const input = document.getElementById("search-book").value.toUpperCase();
-  const titlesBook = document.querySelectorAll(
-    ".item-container > div > h2"
-  );
+  const titlesBook = document.querySelectorAll(".item-container > div > h2");
 
-  for (let title of titlesBook){
-    if(title.innerText.includes(input)){
-      title.parentElement.parentElement.style.display = 'flex';
-    } else{
+  for (let title of titlesBook) {
+    if (title.innerText.includes(input)) {
+      title.parentElement.parentElement.style.display = "flex";
+    } else {
       title.parentElement.parentElement.style.display = "none";
     }
   }
